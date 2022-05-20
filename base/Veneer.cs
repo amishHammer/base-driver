@@ -9,7 +9,9 @@ namespace l99.driver.@base
     public class Veneer
     {
         //TODO: preserve additional_inputs
-        
+
+        protected Machine _machine;
+
         protected ILogger logger;
         
         public string Name => name;
@@ -74,7 +76,12 @@ namespace l99.driver.@base
             _isInternal = isInternal;
             stopwatchDataChange.Start();
         }
-        
+        public Veneer(string name = "", bool isCompound = false, bool isInternal = false, Machine machine = null) : this(name, isCompound, isInternal) {
+            _machine = machine;            
+        }
+
+
+
         protected async Task onDataArrivedAsync(dynamic input, dynamic currentValue)
         {
             logger.Trace($"[{name}] Veneer arrival invocation result:\n{JObject.FromObject(currentValue).ToString()}");
